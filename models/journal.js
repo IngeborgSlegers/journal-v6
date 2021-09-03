@@ -14,9 +14,7 @@ const Journal = db.define('journal', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  owner: {
-    type: DataTypes.INTEGER
-  }
+  
 });
 
 module.exports = Journal;

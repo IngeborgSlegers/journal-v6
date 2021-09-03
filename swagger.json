@@ -1,0 +1,104 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ElevenJournal",
+    "description": "This is my first CRUD project with Swagger documentation"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register a user",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Log a user into their account",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": ["_id", "email", "password"],
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "uniqueItems": true
+            },
+            "email": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "UserResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            }
+          }
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Journal": {
+      "type": "array",
+      "$ref": "#/definitions/Journal"
+    }
+  }
+}

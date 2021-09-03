@@ -15,12 +15,13 @@ router.get("/practice", validateJWT, (req, res) => {
 */
 router.post('/create', validateJWT, async (req, res) => {
     const { title, date, entry } = req.body.journal;
+    console.log("REQ.USER", req.user)
     const { id } = req.user;
     const journalEntry = {
         title,
         date,
         entry,
-        id
+        userId: id
     }
     try {
         const newJournal = await JournalModel.create(journalEntry);
@@ -28,7 +29,6 @@ router.post('/create', validateJWT, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err });
     }
-    JournalModel.create(journalEntry)
         
 });
 
@@ -56,7 +56,7 @@ router.get("/mine", validateJWT, async (req, res) => {
     try {
         const userJournals = await JournalModel.findAll({
             where: {
-                owner: id
+                userId: id
             }
         });
         res.status(200).json(userJournals);
@@ -95,7 +95,7 @@ router.put("/update/:entryId", validateJWT, async (req, res) => {
     const query = {
         where: {
             id: journalId,
-            owner: userId
+            userId
         }
     };
 
@@ -126,7 +126,7 @@ router.delete("/delete/:id", validateJWT, async (req, res) => {
         const query = {
             where: {
                 id: journalId,
-                owner: ownerId
+                userId: ownerId
             }
         };
 
